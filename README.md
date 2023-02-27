@@ -4,6 +4,8 @@
 
 - `/` : List all the lifts with their status
 - `create/`: Create a lift
+- `move/`: move the lift
+- `remove/`: delete the last lift
 
 ### Image Gallery
 - list view
@@ -11,3 +13,6 @@
 
 - create view
   - ![image](https://user-images.githubusercontent.com/57758447/221538230-5cea9896-f0a9-4e76-9e09-001bfe70a234.png)
+
+- remove view
+  - 

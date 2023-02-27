@@ -7,3 +7,4 @@ class Lift(models.Model):
     #if move up is false the lift moves down
     door_open = models.BooleanField(default=False) 
     #if door open is false which means door is closed
+    busy = models.BooleanField(default=False)
