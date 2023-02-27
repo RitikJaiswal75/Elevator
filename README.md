@@ -2,5 +2,5 @@
 
 Available routes:
 
-- / : List all the lifts with their status
-- create/: Create a lift
+- `/` : List all the lifts with their status
+- `create/`: Create a lift
