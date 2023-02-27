@@ -1,6 +1,5 @@
 from django.http import JsonResponse
 from .models import Lift
-import sys
 
 # Create your views here.
 def create_lift(request):
