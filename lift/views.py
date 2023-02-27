@@ -10,8 +10,13 @@ def create_lift(request):
         count = 0
     for i in range(count):
         Lift.objects.create()
+    if count == 0:
+        message = "No lifts created"
+    else:
+        message = "Lift(s) created successfully"
+    
     return JsonResponse({
-        "Status": "Lift(s) created successfully",
+        "Status": message,
         "count": count,
         })
 

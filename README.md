@@ -3,8 +3,8 @@
 ### Available routes:
 
 - `/` : List all the lifts with their status
-- `create/`: Create a lift
-- `move/`: move the lift
+- `create/?count=<number>`: Create a lift
+- `move/?floor=<number>`: move the lift
 - `remove/`: delete the last lift
 
 ### Image Gallery
