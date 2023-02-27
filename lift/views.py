@@ -17,8 +17,17 @@ def list_lift(request):
     return JsonResponse(lift_object)
 
 def move_lift(request):
-    closest_Lift = choose_lift(5)
-    return JsonResponse({"Moved lift": closest_Lift})
+    called_on_floor = 2
+    move_lift_id = choose_lift(called_on_floor)
+    lift = Lift.objects.get(id = move_lift_id)
+    move_up = False
+    if(lift.current_floor < called_on_floor):
+        move_up= True
+    lift.current_floor = called_on_floor
+    lift.move_up = move_up
+    lift.save()
+    new_state = {"id": lift.id, "current_floor": lift.current_floor, "move_up": lift.move_up, "door_open": lift.door_open, "busy": lift.busy}
+    return JsonResponse({"after": new_state})
 
 def remove_lift(request):
     lift = Lift.objects.last()
