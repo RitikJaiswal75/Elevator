@@ -19,6 +19,7 @@
         move_up: A boolean value when false means lift moved down,
         busy: A boolean value when true means lift is in use,
         is_OOO: A boolean field marks lifts under maintenance and active,
+        door_open: A boolean value that indicates the state of door
     }
 }
 ```

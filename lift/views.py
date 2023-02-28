@@ -106,25 +106,29 @@ def toggle_door(request):
         lift_number = int(request.GET.get("lift")) - 1
     except:
         lift_number = 0
-    lift = Lift.objects.all()[lift_number]
-    if lift.is_OOO:
-        return JsonResponse({"Error": "The lift is out of order or in maintanance"})
-    lift.door_open = not lift.door_open
-    lift.save()
-    if(lift.door_open):
-        message="Lift door opened"
+    all_lifts = Lift.objects.all()
+    if lift_number>=0 and lift_number<len(all_lifts):
+        lift = all_lifts[lift_number]
+        if lift.is_OOO:
+            return JsonResponse({"Error": "The lift is out of order or in maintanance"})
+        lift.door_open = not lift.door_open
+        lift.save()
+        if(lift.door_open):
+            message="Lift door opened"
+        else:
+            message = "Lift door closed"
+        requests_Per_Lift = Requests_Per_Lift(lift=lift, history = message)
+        requests_Per_Lift.save()
+        return JsonResponse({
+            "id": lift.id, 
+            "current_floor": lift.current_floor, 
+            "move_up": lift.move_up, 
+            "door_open": lift.door_open, 
+            "busy": lift.busy,
+            "is_OOO": lift.is_OOO,
+            })
     else:
-        message = "Lift door closed"
-    requests_Per_Lift = Requests_Per_Lift(lift=lift, history = message)
-    requests_Per_Lift.save()
-    return JsonResponse({
-        "id": lift.id, 
-        "current_floor": lift.current_floor, 
-        "move_up": lift.move_up, 
-        "door_open": lift.door_open, 
-        "busy": lift.busy,
-        "is_OOO": lift.is_OOO,
-        })
+        return JsonResponse({"Message":"Lift does not exist"})
     
 
 def choose_lift(requiredFloor):

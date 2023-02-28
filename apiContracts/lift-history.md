@@ -1,4 +1,4 @@
-# Contract for: Marking a lift OOO
+# Contract for: Getting user interactions on a lift
 
 - **Route**: `history/`
 - **Params**: `lift=<lift_number>`
