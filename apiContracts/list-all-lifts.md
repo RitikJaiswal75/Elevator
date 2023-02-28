@@ -9,7 +9,7 @@
 - This Route returns an object with all the lifts and their details.(state)
 - Any Parameter Passed to this route via queryparams will be ignored
 
-**Repsonse schema**
+**Response schema**
 ```
 {
     id:{
