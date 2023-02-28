@@ -1,8 +1,8 @@
 # Contracts for: List All lifts
 
-**Route**: `/`
-**Params**: none
-**Method**: `GET`
+- **Route**: `/`
+- **Params**: none
+- **Method**: `GET`
 
 ### Description
 
