@@ -1,4 +1,4 @@
-# Contracts for: Create Lifts
+# Contract for: Create Lifts
 
 - **Route**: `create/`
 - **Params**: `count=<number>`
