@@ -1,29 +1,45 @@
 # Elevator problem
 
+## Assumptions (Mentioned in requirements)
+
+1. Number of elevators in the system will be defined by the API to initialize the elevator system
+2. Elevator System has got only one button per floor.
+3. So if there are a total of 5 floors, there will be 5 buttons per floor.
+4. Note that, this doesn't not mimic real world, when you would have a total of 10 buttons for 5 floors ( one for up and one for down)
+5. Once the elevator reaches its called point, then based on what floor is requested, it moves either up or down.
+6. Assume the API calls which make the elevator go up/down or stop will reflect immediately. When the API to go up is called, you can assume that the elevator has already reached the above floor. 
+7. The system has to assign the most optimal elevator to the user according to their request.
+
+
 ### Available routes:
 
-- `/` : List all the lifts with their status
-- `create/?count=<number>`: Create a lift
-- `move/?floor=<number>`: move the lift
-- `ooo/?lift=<number>`: mark the given lift out of order/ in maintenance
-- `history/?lift=<number>`: Get all the history of the lift
-- `door/?lift=<number>`: Toggle the door of the lift
+- `/` : [Contracts](./apiContracts/list-all-lifts.md)
+- `create/?count=<number>`: [Contracts](./apiContracts/create-lifts.md)
+- `move/?floor=<number>`: [Contracts](./apiContracts/move-lift.md)
+- `ooo/?lift=<number>`: [Contracts](./apiContracts/mark-ooo.md)
+- `history/?lift=<number>`: [Contracts](./apiContracts/lift-history.md)
+- `door/?lift=<number>`: [Contracts](./apiContracts//toggle-door.md)
 
-### Image Gallery
-- list view
-  - ![image](https://user-images.githubusercontent.com/57758447/221545753-66dab1d8-16b6-4ede-8858-9646a59c7e47.png)
+### Interpretations
 
-- create view
-  - ![image](https://user-images.githubusercontent.com/57758447/221545816-c5c703d8-3e2d-4dee-918d-7505d32bb26a.png)
+- Initialize the elevator system to create ‘n’ elevators in the system
+  - Create an api that takes in a number `n` and generates `n` lifts
 
-- move view
-  - ![image](https://user-images.githubusercontent.com/57758447/221729952-104b3e32-543e-41a8-9657-48b9c01360cf.png)
+- Fetch all requests for a given elevator
+  - create an api that accepts a number and returns all the requests sent to the specified lift
 
-- ooo view
-  - ![image](https://user-images.githubusercontent.com/57758447/221729979-5f3fcc6d-204c-43bb-946c-9530fca9e34d.png)
+- Fetch the next destination floor for a given elevator
+  - based on the assumption number 6 this is handled by the move api
 
-- history view
-  - ![image](https://user-images.githubusercontent.com/57758447/221729997-aebc1894-2865-4b21-8c53-a42e158ebfbd.png)
+- Fetch if the elevator is moving up or down currently
+  - based on the assumption number 6 this is handled by the move api by changing move_up flag in the lift schema
 
-- Toggle door view
-  - ![image](https://user-images.githubusercontent.com/57758447/221730023-e8284cfa-bc58-4c05-8843-125a45590e08.png)
+- Saves user request to the list of requests for a elevator
+  - Save all the user interactions coming to all the api's
+
+- Mark a elevator as not working or in maintenance 
+  - Create an api that accepts a lift number and marks that lift in maintenance and thus this lift will become non functional.
+
+- Open/close the door
+  - Create an api that accepts the lift number as parameter and toggles the door_open flag of the lift schema
+
