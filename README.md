@@ -10,7 +10,9 @@
 6. Assume the API calls which make the elevator go up/down or stop will reflect immediately. When the API to go up is called, you can assume that the elevator has already reached the above floor. 
 7. The system has to assign the most optimal elevator to the user according to their request.
 
-
+### Available schema
+- Lift: [Check here](./data_models/lift.md)
+- Requests_per_lift: [Check here](./data_models/Requests_per_lift.md)
 ### Available routes:
 
 - `/` : [Contracts](./apiContracts/list-all-lifts.md)
