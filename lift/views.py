@@ -89,14 +89,17 @@ def history_per_lift(request):
     except:
         lift_number = 0
     lifts = Lift.objects.all()
-    history = Requests_Per_Lift.objects.filter(lift = lifts[lift_number])
-    lift_history = []
-    for _ in history:
-        lift_history.append(_.history)
-    return JsonResponse({
-        "Lift id": lifts[lift_number].id,
-        "history": lift_history,
-        })
+    if lift_number>=0 and lift_number<len(lifts):
+        history = Requests_Per_Lift.objects.filter(lift = lifts[lift_number])
+        lift_history = []
+        for _ in history:
+            lift_history.append(_.history)
+        return JsonResponse({
+            "Lift id": lifts[lift_number].id,
+            "history": lift_history,
+            })
+    else:
+        return JsonResponse({"Message": "Lift not found"})
 
 def toggle_door(request):
     try:
