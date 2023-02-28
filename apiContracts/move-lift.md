@@ -1,4 +1,4 @@
-# Contracts for: Create Lifts
+# Contract for: Move Lift
 
 - **Route**: `create/`
 - **Params**: `floor=<number>`

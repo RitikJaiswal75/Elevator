@@ -1,4 +1,4 @@
-# Contracts for: List All lifts
+# Contract for: List All lifts
 
 - **Route**: `/`
 - **Params**: none
