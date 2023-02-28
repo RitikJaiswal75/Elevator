@@ -8,3 +8,8 @@ class Lift(models.Model):
     door_open = models.BooleanField(default=False) 
     #if door open is false which means door is closed
     busy = models.BooleanField(default=False)
+    is_OOO = models.BooleanField(default=False)
+
+class Requests_Per_Lift(models.Model):
+    lift = models.ForeignKey(Lift, on_delete=models.CASCADE)
+    history = models.CharField(max_length=200, default="called")

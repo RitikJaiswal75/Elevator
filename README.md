@@ -5,7 +5,9 @@
 - `/` : List all the lifts with their status
 - `create/?count=<number>`: Create a lift
 - `move/?floor=<number>`: move the lift
-- `remove/`: delete the last lift
+- `ooo/?lift=<number>`: mark the given lift out of order/ in maintenance
+- `history/?lift=<number>`: Get all the history of the lift
+- `door/?lift=<number>`: Toggle the door of the lift
 
 ### Image Gallery
 - list view
