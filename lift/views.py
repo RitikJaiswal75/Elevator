@@ -61,7 +61,7 @@ def move_lift(request):
         "busy": lift.busy,
         "is_OOO": lift.is_OOO,
         }
-    return JsonResponse({"after": new_state})
+    return JsonResponse({"Lift moved": new_state})
 
 def mark_ooo(request):
     lifts = Lift.objects.all()
