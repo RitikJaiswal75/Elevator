@@ -16,5 +16,14 @@
 - create view
   - ![image](https://user-images.githubusercontent.com/57758447/221545816-c5c703d8-3e2d-4dee-918d-7505d32bb26a.png)
 
-- remove view
-  - ![image](https://user-images.githubusercontent.com/57758447/221545857-2caa6bfd-d086-416c-bd21-2dc9b722186e.png)
+- move view
+  -
+
+- ooo view
+  - 
+
+- history view
+  - 
+
+- Toggle door view
+  - 
