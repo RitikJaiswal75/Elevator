@@ -4,20 +4,26 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Lift',
+            name="Lift",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('current_floor', models.IntegerField(default=0)),
-                ('move_up', models.BooleanField(default=False)),
-                ('door_open', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("current_floor", models.IntegerField(default=0)),
+                ("move_up", models.BooleanField(default=False)),
+                ("door_open", models.BooleanField(default=False)),
             ],
         ),
     ]

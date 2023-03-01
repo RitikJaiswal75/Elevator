@@ -4,19 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('lift', '0005_rename_lift_id_requests_per_lift_lift'),
+        ("lift", "0005_rename_lift_id_requests_per_lift_lift"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='requests_per_lift',
-            name='called_on_floor',
+            model_name="requests_per_lift",
+            name="called_on_floor",
         ),
         migrations.AddField(
-            model_name='requests_per_lift',
-            name='history',
-            field=models.CharField(default='called', max_length=200),
+            model_name="requests_per_lift",
+            name="history",
+            field=models.CharField(default="called", max_length=200),
         ),
     ]

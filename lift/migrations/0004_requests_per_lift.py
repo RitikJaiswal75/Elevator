@@ -5,18 +5,30 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('lift', '0003_lift_is_ooo'),
+        ("lift", "0003_lift_is_ooo"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Requests_Per_Lift',
+            name="Requests_Per_Lift",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('called_on_floor', models.IntegerField(default=0)),
-                ('lift_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='lift.lift')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("called_on_floor", models.IntegerField(default=0)),
+                (
+                    "lift_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="lift.lift"
+                    ),
+                ),
             ],
         ),
     ]
