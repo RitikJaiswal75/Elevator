@@ -6,7 +6,7 @@ from .models import Lift, Requests_Per_Lift
 
 def create_lift(request):
     try:
-        count = int(request.GET.get('count'))
+        count = int(request.GET.get("count"))
     except BaseException:
         count = 0
     for i in range(count):
@@ -18,10 +18,12 @@ def create_lift(request):
     else:
         message = "Lift(s) created successfully"
 
-    return JsonResponse({
-        "Status": message,
-        "count": count,
-    })
+    return JsonResponse(
+        {
+            "Status": message,
+            "count": count,
+        }
+    )
 
 
 def list_lift(request):
@@ -43,7 +45,7 @@ def list_lift(request):
 
 def move_lift(request):
     try:
-        called_on_floor = int(request.GET.get('floor'))
+        called_on_floor = int(request.GET.get("floor"))
     except BaseException:
         called_on_floor = 1
     move_lift_id = choose_lift(called_on_floor)
@@ -52,7 +54,7 @@ def move_lift(request):
     request_per_lift = Requests_Per_Lift(lift=lift, history=message)
     request_per_lift.save()
     move_up = False
-    if (lift.current_floor < called_on_floor):
+    if lift.current_floor < called_on_floor:
         move_up = True
     lift.current_floor = called_on_floor
     lift.move_up = move_up
@@ -78,12 +80,11 @@ def mark_ooo(request):
         message = "Marked the lift OOO"
         lifts[lift_to_mark].is_OOO = not lifts[lift_to_mark].is_OOO
         lifts[lift_to_mark].save()
-        if (lifts[lift_to_mark].is_OOO):
+        if lifts[lift_to_mark].is_OOO:
             message = "Lift marked OOO"
         else:
             message = "Lift marked active"
-        requests_Per_Lift = Requests_Per_Lift(
-            lift=lifts[lift_to_mark], history=message)
+        requests_Per_Lift = Requests_Per_Lift(lift=lifts[lift_to_mark], history=message)
         requests_Per_Lift.save()
     else:
         message = "Lift does not exist"
@@ -101,10 +102,12 @@ def history_per_lift(request):
         lift_history = []
         for _ in history:
             lift_history.append(_.history)
-        return JsonResponse({
-            "Lift id": lifts[lift_number].id,
-            "history": lift_history,
-        })
+        return JsonResponse(
+            {
+                "Lift id": lifts[lift_number].id,
+                "history": lift_history,
+            }
+        )
     else:
         return JsonResponse({"Message": "Lift does not exist"}, status=404)
 
@@ -118,24 +121,25 @@ def toggle_door(request):
     if lift_number >= 0 and lift_number < len(all_lifts):
         lift = all_lifts[lift_number]
         if lift.is_OOO:
-            return JsonResponse(
-                {"Error": "The lift is out of order or in maintanance"})
+            return JsonResponse({"Error": "The lift is out of order or in maintanance"})
         lift.door_open = not lift.door_open
         lift.save()
-        if (lift.door_open):
+        if lift.door_open:
             message = "Lift door opened"
         else:
             message = "Lift door closed"
         requests_Per_Lift = Requests_Per_Lift(lift=lift, history=message)
         requests_Per_Lift.save()
-        return JsonResponse({
-            "id": lift.id,
-            "current_floor": lift.current_floor,
-            "move_up": lift.move_up,
-            "door_open": lift.door_open,
-            "busy": lift.busy,
-            "is_OOO": lift.is_OOO,
-        })
+        return JsonResponse(
+            {
+                "id": lift.id,
+                "current_floor": lift.current_floor,
+                "move_up": lift.move_up,
+                "door_open": lift.door_open,
+                "busy": lift.busy,
+                "is_OOO": lift.is_OOO,
+            }
+        )
     else:
         return JsonResponse({"Message": "Lift does not exist"}, status=404)
 
