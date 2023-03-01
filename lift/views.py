@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from .models import Lift, Requests_Per_Lift
+from .serializer import LiftSerializer
 
 # Create your views here.
 
@@ -30,14 +31,7 @@ def list_lift(request):
     lifts = Lift.objects.all()
     lift_object = {}
     for lift in lifts:
-        lift_object[lift.id] = {
-            "id": lift.id,
-            "current_floor": lift.current_floor,
-            "move_up": lift.move_up,
-            "door_open": lift.door_open,
-            "busy": lift.busy,
-            "is_OOO": lift.is_OOO,
-        }
+        lift_object[lift.id] = LiftSerializer(lift).data
     if len(lifts) == 0:
         return JsonResponse({"Error": "No lifts found"}, status=404)
     return JsonResponse(lift_object)
@@ -59,15 +53,8 @@ def move_lift(request):
     lift.current_floor = called_on_floor
     lift.move_up = move_up
     lift.save()
-    new_state = {
-        "id": lift.id,
-        "current_floor": lift.current_floor,
-        "move_up": lift.move_up,
-        "door_open": lift.door_open,
-        "busy": lift.busy,
-        "is_OOO": lift.is_OOO,
-    }
-    return JsonResponse({"Lift moved": new_state})
+    jsonData = LiftSerializer(lift).data
+    return JsonResponse({"Lift moved": jsonData})
 
 
 def mark_ooo(request):
@@ -130,16 +117,7 @@ def toggle_door(request):
             message = "Lift door closed"
         requests_Per_Lift = Requests_Per_Lift(lift=lift, history=message)
         requests_Per_Lift.save()
-        return JsonResponse(
-            {
-                "id": lift.id,
-                "current_floor": lift.current_floor,
-                "move_up": lift.move_up,
-                "door_open": lift.door_open,
-                "busy": lift.busy,
-                "is_OOO": lift.is_OOO,
-            }
-        )
+        return JsonResponse(LiftSerializer(lift).data)
     else:
         return JsonResponse({"Message": "Lift does not exist"}, status=404)
 
