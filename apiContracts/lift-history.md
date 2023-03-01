@@ -14,6 +14,7 @@
 **Response Schema**
 
 - Success
+
 ```
 {
     "Lift id": Id of the selected lift,
@@ -22,6 +23,7 @@
 ```
 
 - Failure
+
 ```
 {
     "Message":"Lift not Found",
@@ -31,6 +33,7 @@
 ### Image gallery
 
 - Success
+
   - ![image](https://user-images.githubusercontent.com/57758447/221785253-f6423272-8c4d-413b-9544-2f393660579a.png)
 
 - Failure

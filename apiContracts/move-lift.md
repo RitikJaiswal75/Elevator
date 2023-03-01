@@ -11,6 +11,7 @@
 - If no Parameter is passed it calls a lift to first floor.
 
 **Response schema**
+
 ```
 {
     Lift moved: {
@@ -25,4 +26,5 @@
 ```
 
 ### Image gallery
+
 - ![image](https://user-images.githubusercontent.com/57758447/221764670-7339ed9a-d9cf-4a0d-a22a-7cc241cee0af.png)
