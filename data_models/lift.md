@@ -7,4 +7,4 @@
 `door_open`: Boolean, Not Null, default = False
 `busy`: Boolean, Not Null, default = False
 `is_OOO`: Boolean, Not Null, default = False
-``` 
+```
