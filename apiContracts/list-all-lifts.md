@@ -26,4 +26,4 @@
 
 # Image gallery
 
-![image](https: // user - images.githubusercontent.com / 57758447 / 221545753 - 66dab1d8 - 16b6 - 4ede - 8858 - 9646a59c7e47.png)
+![image](https://user-images.githubusercontent.com/57758447/221545753-66dab1d8-16b6-4ede-8858-9646a59c7e47.png)
