@@ -34,7 +34,7 @@ def list_lift(request):
             "is_OOO": lift.is_OOO,
             }
     if len(lifts)==0:
-        return JsonResponse({"Error": "No lifts found"})
+        return JsonResponse({"Error": "No lifts found"}, status = 404)
     return JsonResponse(lift_object)
 
 def move_lift(request):
@@ -81,7 +81,7 @@ def mark_ooo(request):
         requests_Per_Lift.save()
     else:
         message = "Lift does not exist"
-    return JsonResponse({"message": message })
+    return JsonResponse({"message": message }, status = 404)
 
 def history_per_lift(request):
     try:
@@ -99,7 +99,7 @@ def history_per_lift(request):
             "history": lift_history,
             })
     else:
-        return JsonResponse({"Message": "Lift not found"})
+        return JsonResponse({"Message": "Lift does not exist"}, status = 404)
 
 def toggle_door(request):
     try:
@@ -128,7 +128,7 @@ def toggle_door(request):
             "is_OOO": lift.is_OOO,
             })
     else:
-        return JsonResponse({"Message":"Lift does not exist"})
+        return JsonResponse({"Message":"Lift does not exist"}, status=404)
     
 
 def choose_lift(requiredFloor):
