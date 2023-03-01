@@ -1,16 +1,17 @@
 # Contract for: Move Lift
 
 - **Route**: `create/`
-- **Params**: `floor=<number>`
+- **Params**: `floor = <number >`
 - **Method**: `GET`
 
-### Description
+# Description
 
 - This Route moves closest lift to the desired floor
 - This Route accepts a query param of floor having an integer value.
 - If no Parameter is passed it calls a lift to first floor.
 
 **Response schema**
+
 ```
 {
     Lift moved: {
@@ -24,5 +25,6 @@
 }
 ```
 
-### Image gallery
-- ![image](https://user-images.githubusercontent.com/57758447/221764670-7339ed9a-d9cf-4a0d-a22a-7cc241cee0af.png)
+# Image gallery
+
+- ![image](https: // user - images.githubusercontent.com / 57758447 / 221764670 - 7339ed9a - d9cf - 4a0d - a22a - 7cc241cee0af.png)

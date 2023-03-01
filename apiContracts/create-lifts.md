@@ -1,10 +1,10 @@
 # Contract for: Create Lifts
 
 - **Route**: `create/`
-- **Params**: `count=<number>`
+- **Params**: `count = <number >`
 - **Method**: `GET`
 
-### Description
+# Description
 
 - This Route creates multiple lifts when called.
 - This Route accepts a query param of count having an integer value.
@@ -19,5 +19,6 @@
 }
 ```
 
-### Image gallery
-- ![image](https://user-images.githubusercontent.com/57758447/221763498-3c2937fe-4773-4221-b416-6c16347d1e45.png)
+# Image gallery
+
+- ![image](https: // user - images.githubusercontent.com / 57758447 / 221763498 - 3c2937fe - 4773 - 4221 - b416 - 6c16347d1e45.png)

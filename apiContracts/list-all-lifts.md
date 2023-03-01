@@ -4,15 +4,16 @@
 - **Params**: none
 - **Method**: `GET`
 
-### Description
+# Description
 
 - This Route returns an object with all the lifts and their details.(state)
 - Any Parameter Passed to this route via queryparams will be ignored
 
 **Response schema**
+
 ```
 {
-    id:{
+    id: {
         id: id of the lift,
         current_floor: Current floor on which the lift is,
         move_up: A boolean value when false means lift moved down,
@@ -23,5 +24,6 @@
 }
 ```
 
-### Image gallery
-![image](https://user-images.githubusercontent.com/57758447/221545753-66dab1d8-16b6-4ede-8858-9646a59c7e47.png)
+# Image gallery
+
+![image](https: // user - images.githubusercontent.com / 57758447 / 221545753 - 66dab1d8 - 16b6 - 4ede - 8858 - 9646a59c7e47.png)

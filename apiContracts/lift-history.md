@@ -1,10 +1,10 @@
 # Contract for: Getting user interactions on a lift
 
 - **Route**: `history/`
-- **Params**: `lift=<lift_number>`
+- **Params**: `lift = <lift_number >`
 - **Method**: `GET`
 
-### Description
+# Description
 
 - This API gets all the user interaction for the specified lift
 - You can specify the lift number by passing the query parameter of lift
@@ -14,24 +14,27 @@
 **Response Schema**
 
 - Success
+
 ```
 {
     "Lift id": Id of the selected lift,
-    "history" : [] list of user interactions in the form of string
+    "history": [] list of user interactions in the form of string
 }
 ```
 
 - Failure
+
 ```
 {
-    "Message":"Lift not Found",
+    "Message": "Lift not Found",
 }
 ```
 
-### Image gallery
+# Image gallery
 
 - Success
-  - ![image](https://user-images.githubusercontent.com/57758447/221785253-f6423272-8c4d-413b-9544-2f393660579a.png)
+
+- ![image](https: // user - images.githubusercontent.com / 57758447 / 221785253 - f6423272 - 8c4d - 413b - 9544 - 2f393660579a.png)
 
 - Failure
-  - ![image](https://user-images.githubusercontent.com/57758447/221785211-d54a5a58-8b4f-48fb-86bd-55e75b0f9fca.png)
+- ![image](https: // user - images.githubusercontent.com / 57758447 / 221785211 - d54a5a58 - 8b4f - 48fb - 86bd - 55e75b0f9fca.png)
