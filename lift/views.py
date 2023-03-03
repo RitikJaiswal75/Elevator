@@ -1,147 +1,9 @@
 from django.http import JsonResponse
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from .models import Lift, Requests_Per_Lift
-
-# Create your views here.
-
-
-def create_lift(request):
-    try:
-        count = int(request.GET.get("count"))
-    except BaseException:
-        count = 0
-    for i in range(count):
-        lift = Lift.objects.create()
-        request_per_lift = Requests_Per_Lift(lift=lift, history="Lift created")
-        request_per_lift.save()
-    if count < 0:
-        message = "No lifts created"
-    else:
-        message = "Lift(s) created successfully"
-
-    return JsonResponse(
-        {
-            "Status": message,
-            "count": count,
-        }
-    )
-
-
-def list_lift(request):
-    lifts = Lift.objects.all()
-    lift_object = {}
-    for lift in lifts:
-        lift_object[lift.id] = {
-            "id": lift.id,
-            "current_floor": lift.current_floor,
-            "move_up": lift.move_up,
-            "door_open": lift.door_open,
-            "busy": lift.busy,
-            "is_OOO": lift.is_OOO,
-        }
-    if len(lifts) == 0:
-        return JsonResponse({"Error": "No lifts found"}, status=404)
-    return JsonResponse(lift_object)
-
-
-def move_lift(request):
-    try:
-        called_on_floor = int(request.GET.get("floor"))
-    except BaseException:
-        called_on_floor = 1
-    move_lift_id = choose_lift(called_on_floor)
-    lift = Lift.objects.get(id=move_lift_id)
-    message = "Lift called on floor " + str(called_on_floor)
-    request_per_lift = Requests_Per_Lift(lift=lift, history=message)
-    request_per_lift.save()
-    move_up = False
-    if lift.current_floor < called_on_floor:
-        move_up = True
-    lift.current_floor = called_on_floor
-    lift.move_up = move_up
-    lift.save()
-    new_state = {
-        "id": lift.id,
-        "current_floor": lift.current_floor,
-        "move_up": lift.move_up,
-        "door_open": lift.door_open,
-        "busy": lift.busy,
-        "is_OOO": lift.is_OOO,
-    }
-    return JsonResponse({"Lift moved": new_state})
-
-
-def mark_ooo(request):
-    lifts = Lift.objects.all()
-    try:
-        lift_to_mark = int(request.GET.get("lift")) - 1
-    except BaseException:
-        lift_to_mark = -1
-    if lift_to_mark >= 0 and lift_to_mark < len(lifts):
-        message = "Marked the lift OOO"
-        lifts[lift_to_mark].is_OOO = not lifts[lift_to_mark].is_OOO
-        lifts[lift_to_mark].save()
-        if lifts[lift_to_mark].is_OOO:
-            message = "Lift marked OOO"
-        else:
-            message = "Lift marked active"
-        requests_Per_Lift = Requests_Per_Lift(lift=lifts[lift_to_mark], history=message)
-        requests_Per_Lift.save()
-    else:
-        message = "Lift does not exist"
-    return JsonResponse({"message": message}, status=404)
-
-
-def history_per_lift(request):
-    try:
-        lift_number = int(request.GET.get("lift")) - 1
-    except BaseException:
-        lift_number = 0
-    lifts = Lift.objects.all()
-    if lift_number >= 0 and lift_number < len(lifts):
-        history = Requests_Per_Lift.objects.filter(lift=lifts[lift_number])
-        lift_history = []
-        for _ in history:
-            lift_history.append(_.history)
-        return JsonResponse(
-            {
-                "Lift id": lifts[lift_number].id,
-                "history": lift_history,
-            }
-        )
-    else:
-        return JsonResponse({"Message": "Lift does not exist"}, status=404)
-
-
-def toggle_door(request):
-    try:
-        lift_number = int(request.GET.get("lift")) - 1
-    except BaseException:
-        lift_number = 0
-    all_lifts = Lift.objects.all()
-    if lift_number >= 0 and lift_number < len(all_lifts):
-        lift = all_lifts[lift_number]
-        if lift.is_OOO:
-            return JsonResponse({"Error": "The lift is out of order or in maintanance"})
-        lift.door_open = not lift.door_open
-        lift.save()
-        if lift.door_open:
-            message = "Lift door opened"
-        else:
-            message = "Lift door closed"
-        requests_Per_Lift = Requests_Per_Lift(lift=lift, history=message)
-        requests_Per_Lift.save()
-        return JsonResponse(
-            {
-                "id": lift.id,
-                "current_floor": lift.current_floor,
-                "move_up": lift.move_up,
-                "door_open": lift.door_open,
-                "busy": lift.busy,
-                "is_OOO": lift.is_OOO,
-            }
-        )
-    else:
-        return JsonResponse({"Message": "Lift does not exist"}, status=404)
+from .serializer import LiftSerializer
 
 
 def choose_lift(requiredFloor):
@@ -156,3 +18,117 @@ def choose_lift(requiredFloor):
                 distance = abs(requiredFloor - lift.current_floor)
                 closest_lift = lift.id
     return closest_lift
+
+
+NO_PARAMETER_ERROR = "No Parameters Passed"
+
+
+class LiftViewSet(viewsets.ModelViewSet):
+    queryset = Lift.objects.all()
+    serializer_class = LiftSerializer
+
+    @action(methods=["GET"], url_path="create", detail=False)
+    def create_elevators(self, request):
+        try:
+            count = int(request.query_params["count"])
+            bulk = []
+            for _ in range(count):
+                bulk.append(Lift())
+            Lift.objects.bulk_create(bulk)
+            data = {
+                "message": "All Lifts created successfully",
+                "Total_count": self.queryset.count(),
+                "Created_count": count,
+            }
+            for lift in self.queryset:
+                Requests_Per_Lift.objects.create(lift=lift, history="Lift Created")
+            print(data)
+            return Response(data)
+        except Exception:
+            return Response(exception=True, data=NO_PARAMETER_ERROR, status=400)
+
+    @action(methods=["GET"], url_path="move", detail=False)
+    def move_elevator(self, request):
+        try:
+            floor = int(request.query_params["floor"])
+            LiftId = choose_lift(floor)
+            lift = Lift.objects.get(id=LiftId)
+            move_up = False
+            if lift.current_floor < floor:
+                move_up = True
+            lift.move_up = move_up
+            lift.current_floor = floor
+            lift.save()
+            if move_up:
+                Requests_Per_Lift.objects.create(
+                    lift=lift, history="Lift Moved Up to floor " + str(floor)
+                )
+            else:
+                Requests_Per_Lift.objects.create(
+                    lift=lift, history="Lift Moved Down to floor " + str(floor)
+                )
+            return Response(LiftSerializer(lift).data)
+
+        except Exception:
+            return Response(exception=True, status=400, data=NO_PARAMETER_ERROR)
+
+    @action(methods=["GET"], url_path="ooo", detail=False)
+    def mark_ooo(self, request):
+        try:
+            lift_number = int(request.query_params["lift"]) - 1
+            if lift_number >= 0 and lift_number < len(self.queryset):
+                lift = self.queryset[lift_number]
+                lift.is_OOO = not lift.is_OOO
+                lift.save()
+                if lift.is_OOO:
+                    Requests_Per_Lift.objects.create(
+                        lift=lift, history="Lift Marked in Maintenance"
+                    )
+                else:
+                    Requests_Per_Lift.objects.create(
+                        lift=lift, history="Lift Marked active"
+                    )
+                return Response(LiftSerializer(lift).data)
+            return Response(status=404, data="Lift Not Found")
+        except Exception:
+            return Response(exception=True, data=NO_PARAMETER_ERROR, status=400)
+
+    @action(methods=["GET"], url_path="door", detail=False)
+    def toggle_door(self, request):
+        try:
+            lift_number = int(request.query_params["lift"]) - 1
+            if lift_number >= 0 and lift_number < len(self.queryset):
+                lift = self.queryset[lift_number]
+                lift.door_open = not lift.door_open
+                lift.save()
+                if lift.door_open:
+                    Requests_Per_Lift.objects.create(
+                        lift=lift, history="Lift Door Opened"
+                    )
+                else:
+                    Requests_Per_Lift.objects.create(
+                        lift=lift, history="Lift Door Closed"
+                    )
+                return Response(LiftSerializer(lift).data)
+            return Response(status=404, data="Lift not found")
+        except Exception:
+            return Response(status=400, data=NO_PARAMETER_ERROR)
+
+    @action(methods=["GET"], url_path="history", detail=False)
+    def history_per_lift(self, request):
+        try:
+            lift_number = int(request.query_params["lift"]) - 1
+            print(lift_number)
+            if lift_number >= 0 and lift_number < len(self.queryset):
+                lift = self.queryset[lift_number]
+                history_per_lift = Requests_Per_Lift.objects.filter(lift=lift)
+                lift_history = []
+                for history in history_per_lift:
+                    lift_history.append(history.history)
+                return Response({"Lift_id": lift.id, "history": lift_history})
+            else:
+                return Response(status=404, data="Lift not found")
+        except Exception:
+            return Response(
+                exception=True, data="Please Provide a lift number", status=400
+            )

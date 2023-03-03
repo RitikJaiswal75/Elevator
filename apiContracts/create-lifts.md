@@ -14,11 +14,12 @@
 
 ```
 {
-    status: its a string message thats says lift created,
-    count: count of the lifts created,
+    "message": "All Lifts created successfully",
+    "Total_count": total count of the lifts present,
+    "Created_count": count of the lifts created
 }
 ```
 
 # Image gallery
 
-- ![image](https://user-images.githubusercontent.com/57758447/221763498-3c2937fe-4773-4221-b416-6c16347d1e45.png)
+- ![image](https://user-images.githubusercontent.com/57758447/222747255-4471255d-f6b6-438f-a64e-73512065084c.png)

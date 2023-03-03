@@ -17,24 +17,11 @@
 
 ```
 {
-    "Lift id": Id of the selected lift,
+    "Lift_id": Id of the selected lift,
     "history": [] list of user interactions in the form of string
-}
-```
-
-- Failure
-
-```
-{
-    "Message": "Lift not Found",
 }
 ```
 
 # Image gallery
 
-- Success
-
-- ![image](https://user-images.githubusercontent.com/57758447/221785253-f6423272-8c4d-413b-9544-2f393660579a.png)
-
-- Failure
-- ![image](https://user-images.githubusercontent.com/57758447/221785211-d54a5a58-8b4f-48fb-86bd-55e75b0f9fca.png)
+- ![image](https://user-images.githubusercontent.com/57758447/222747456-770a9903-cb29-46fb-b490-7518370c2571.png)

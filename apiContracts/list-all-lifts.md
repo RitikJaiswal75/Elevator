@@ -12,18 +12,18 @@
 **Response schema**
 
 ```
-{
-    id: {
-        id: id of the lift,
-        current_floor: Current floor on which the lift is,
-        move_up: A boolean value when false means lift moved down,
-        busy: A boolean value when true means lift is in use,
-        is_OOO: A boolean field marks lifts under maintenance and active,
-        door_open: A boolean value that indicates the state of door
+[
+    {
+        "id": Lift Id,
+        "current_floor": floor on which the lift is present,
+        "move_up": boolean field for checking if lift moved up or down,
+        "door_open": boolean field for checking if lift doors are open or close,
+        "busy": boolean field for checking if lift is busy or free,
+        "is_OOO": boolean field for checking if lift is in maintenance
     },
-}
+]
 ```
 
 # Image gallery
 
-![image](https://user-images.githubusercontent.com/57758447/221545753-66dab1d8-16b6-4ede-8858-9646a59c7e47.png)
+- ![image](https://user-images.githubusercontent.com/57758447/222747651-445927f4-54df-4f64-9b25-60b1c2a09ac4.png)
