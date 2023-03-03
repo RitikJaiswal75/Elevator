@@ -18,23 +18,15 @@
 
 ```
 {
-    message: lift marked active / ooo
-}
-```
-
-- Failure
-
-```
-{
-    message: Lift does not exist
+    "id": Lift Id,
+    "current_floor": floor on which the lift is present,
+    "move_up": boolean field for checking if lift moved up or down,
+    "door_open": boolean field for checking if lift doors are open or close,
+    "busy": boolean field for checking if lift is busy or free,
+    "is_OOO": boolean field for checking if lift is in maintenance
 }
 ```
 
 # Image gallery
 
-- Success
 
-- ![image](https://user-images.githubusercontent.com/57758447/221781037-0a267094-07aa-44e2-9caa-0c78e0278f57.png)
-
-- Failure
-- ![image](https://user-images.githubusercontent.com/57758447/221780971-170b6d76-f96b-4d01-a397-4bdee2fcb37f.png)
