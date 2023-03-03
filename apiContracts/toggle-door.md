@@ -25,20 +25,4 @@
 }
 ```
 
-- Failure
-
-```
-{
-    "Message": "Lift does not exist"
-}
-```
-
 # Image gallery
-
-- Success
-
-- ![image](https://user-images.githubusercontent.com/57758447/221789563-bf868040-ac94-46f8-b655-c4b3b391fb46.png)
-- ![image](https://user-images.githubusercontent.com/57758447/221789613-75648f5c-88e8-434a-abba-3ba3d00f1bcc.png)
-
-- Failure
-- ![image](https://user-images.githubusercontent.com/57758447/221789534-262aae70-dd92-4c82-a4ae-4b9d8a968600.png)

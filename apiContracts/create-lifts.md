@@ -21,5 +21,3 @@
 ```
 
 # Image gallery
-
-

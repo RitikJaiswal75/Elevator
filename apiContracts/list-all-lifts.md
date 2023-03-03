@@ -25,5 +25,3 @@
 ```
 
 # Image gallery
-
-
