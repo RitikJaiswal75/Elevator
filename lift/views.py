@@ -60,9 +60,13 @@ class LiftViewSet(viewsets.ModelViewSet):
             lift.current_floor = floor
             lift.save()
             if move_up:
-                Requests_Per_Lift.objects.create(lift=lift, history="Lift Moved Up")
+                Requests_Per_Lift.objects.create(
+                    lift=lift, history="Lift Moved Up to floor " + str(floor)
+                )
             else:
-                Requests_Per_Lift.objects.create(lift=lift, history="Lift Moved Down")
+                Requests_Per_Lift.objects.create(
+                    lift=lift, history="Lift Moved Down to floor " + str(floor)
+                )
             return Response(LiftSerializer(lift).data)
 
         except Exception:

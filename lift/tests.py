@@ -94,7 +94,7 @@ class ToggleElevatorDoorsTestCase(APITestCase):
     def setup(self):
         Lift.objects.create()
 
-    def test_elevator_door_opens(self):
+    def test_elevator_door_closes(self):
         response = self.client.get("/door/", {"lift": "1"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["id"], 1)
@@ -104,3 +104,22 @@ class ToggleElevatorDoorsTestCase(APITestCase):
         response = self.client.get("/door/")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data, NO_PARAMETER_ERROR)
+
+
+class HistoryPerLiftTestCase(APITestCase):
+    def setUp(self):
+        Lift.objects.create()
+
+    def test_history_of_lift_move_up(self):
+        self.client.get("/move/", {"floor": "6"})
+        response = self.client.get("/history/", {"lift": "1"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["Lift_id"], 1)
+        self.assertEqual(response.data["history"][0], "Lift Moved Up to floor 6")
+
+    def test_history_of_lift_move_Down(self):
+        self.client.get("/move/", {"floor": "-2"})
+        response = self.client.get("/history/", {"lift": "1"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["Lift_id"], 1)
+        self.assertEqual(response.data["history"][0], "Lift Moved Down to floor -2")
