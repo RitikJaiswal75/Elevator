@@ -6,6 +6,8 @@
 - Every PR is double verified via `pre-commit-hooks` and `github workflows`.
 - The pre-commit hooks also consist of text formatting via `black`
 
+### To checkout the api in action please visit: [https://drive.google.com/file/d/1ObNXuVz7-B_wJYl9TQTnwS3We7ymT9OG/view?usp=sharing](https://drive.google.com/file/d/1ObNXuVz7-B_wJYl9TQTnwS3We7ymT9OG/view?usp=sharing)
+
 ## Interactions with the project
 
 - To install all the requirements run
