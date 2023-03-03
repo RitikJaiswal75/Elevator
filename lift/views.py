@@ -20,6 +20,9 @@ def choose_lift(requiredFloor):
     return closest_lift
 
 
+NO_PARAMETER_ERROR = "No Parameters Passed"
+
+
 class LiftViewSet(viewsets.ModelViewSet):
     queryset = Lift.objects.all()
     serializer_class = LiftSerializer
@@ -42,7 +45,7 @@ class LiftViewSet(viewsets.ModelViewSet):
             print(data)
             return Response(data)
         except Exception:
-            return Response(exception=True, data="No Parameters Passed", status=400)
+            return Response(exception=True, data=NO_PARAMETER_ERROR, status=400)
 
     @action(methods=["GET"], url_path="move", detail=False)
     def move_elevator(self, request):
@@ -50,11 +53,11 @@ class LiftViewSet(viewsets.ModelViewSet):
             floor = int(request.query_params["floor"])
             LiftId = choose_lift(floor)
             lift = Lift.objects.get(id=LiftId)
-            lift.current_floor = floor
             move_up = False
             if lift.current_floor < floor:
                 move_up = True
             lift.move_up = move_up
+            lift.current_floor = floor
             lift.save()
             if move_up:
                 Requests_Per_Lift.objects.create(lift=lift, history="Lift Moved Up")
@@ -63,9 +66,7 @@ class LiftViewSet(viewsets.ModelViewSet):
             return Response(LiftSerializer(lift).data)
 
         except Exception:
-            return Response(
-                exception=True, status=400, data="Please enter the floor number"
-            )
+            return Response(exception=True, status=400, data=NO_PARAMETER_ERROR)
 
     @action(methods=["GET"], url_path="ooo", detail=False)
     def mark_ooo(self, request):
@@ -84,11 +85,9 @@ class LiftViewSet(viewsets.ModelViewSet):
                         lift=lift, history="Lift Marked active"
                     )
                 return Response(LiftSerializer(lift).data)
-            return Response(status=404, data="Lift does not exist")
+            return Response(status=404, data="Lift Not Found")
         except Exception:
-            return Response(
-                exception=True, data="Please provide the elevator Number", status=400
-            )
+            return Response(exception=True, data=NO_PARAMETER_ERROR, status=400)
 
     @action(methods=["GET"], url_path="door", detail=False)
     def toggle_door(self, request):
@@ -109,7 +108,7 @@ class LiftViewSet(viewsets.ModelViewSet):
                 return Response(LiftSerializer(lift).data)
             return Response(status=404, data="Lift not found")
         except Exception:
-            return Response(status=400, data="Please provide a lift number")
+            return Response(status=400, data=NO_PARAMETER_ERROR)
 
     @action(methods=["GET"], url_path="history", detail=False)
     def history_per_lift(self, request):
